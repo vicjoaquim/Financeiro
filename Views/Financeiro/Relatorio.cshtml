@@ -1,0 +1,30 @@
+@model IEnumerable<Parte_do_financeiro.Models.Financeiro>
+@{
+    ViewData["Title"] = "Relatório Financeiro";
+}
+
+<h2>Relatório Financeiro</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Contrato</th>
+            <th>Valor Total</th>
+            <th>Data Pagamento</th>
+            <th>Status</th>
+            <th>Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+            <tr>
+                <td>@f.Contrato.Nome</td>
+                <td>@f.ValorTotal.ToString("C")</td>
+                <td>@f.DataPagamento.ToShortDateString()</td>
+                <td>@f.StatusPagamento</td>
+                <td>@f.Descricao</td>
+            </tr>
+        }
+    </tbody>
+</table>

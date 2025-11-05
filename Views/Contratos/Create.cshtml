@@ -1,0 +1,55 @@
+@model Parte_do_financeiro.Models.Contrato
+@{
+    ViewData["Title"] = "Criar Contrato";
+}
+
+<h2>Criar Contrato</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ValorMensal" class="form-label"></label>
+        <input asp-for="ValorMensal" class="form-control" />
+        <span asp-validation-for="ValorMensal" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ReajustePercentual" class="form-label"></label>
+        <input asp-for="ReajustePercentual" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DataInicio" class="form-label"></label>
+        <input asp-for="DataInicio" class="form-control" type="date" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DataFim" class="form-label"></label>
+        <input asp-for="DataFim" class="form-control" type="date" />
+    </div>
+
+    <!-- 🔹 Novo campo para selecionar o locatário -->
+    <div class="mb-3">
+        <label asp-for="LocatarioId" class="form-label">Locatário</label>
+        <select asp-for="LocatarioId" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Usuarios, "Id", "Email"))">
+            <option value="">Selecione um locatário...</option>
+        </select>
+        <span asp-validation-for="LocatarioId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option>Ativo</option>
+            <option>Inativo</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+</form>

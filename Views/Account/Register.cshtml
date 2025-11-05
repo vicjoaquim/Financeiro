@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Cadastrar Usuário";
+}
+
+<h2>Cadastrar novo usuário</h2>
+
+<form asp-action="Register" method="post">
+    <div class="mb-3">
+        <label>E-mail</label>
+        <input name="email" type="email" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Senha</label>
+        <input name="password" type="password" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Tipo de Usuário</label>
+        <select name="role" class="form-select" required>
+            <option value="">Selecione...</option>
+            @foreach (var role in (List<string>)ViewBag.Roles)
+            {
+                <option value="@role">@role</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <p class="text-danger">@ViewBag.Error</p>
+</form>

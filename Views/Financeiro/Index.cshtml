@@ -1,0 +1,43 @@
+@model IEnumerable<Parte_do_financeiro.Models.Financeiro>
+@{
+    ViewData["Title"] = "Financeiro";
+}
+
+<h2>Financeiro</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Contrato</th>
+            <th>Valor Total</th>
+            <th>Data Pagamento</th>
+            <th>Status</th>
+            <th>Descrição</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+            <tr>
+                <td>@f.Contrato.Nome</td>
+                <td>@f.ValorTotal.ToString("C")</td>
+                <td>@f.DataPagamento.ToShortDateString()</td>
+                <td>@f.StatusPagamento</td>
+                <td>@f.Descricao</td>
+                <td>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@f.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@f.Id" class="btn btn-danger btn-sm">Excluir</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole("Administrador"))
+{
+    <a asp-action="Create" class="btn btn-success">Nova Conta</a>
+}

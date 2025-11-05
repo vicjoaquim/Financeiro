@@ -1,0 +1,47 @@
+@model IEnumerable<Parte_do_financeiro.Models.Contrato>
+@{
+    ViewData["Title"] = "Contratos";
+}
+
+<h2>Contratos</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Valor Mensal</th>
+            <th>Reajuste (%)</th>
+            <th>Data Início</th>
+            <th>Data Fim</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Nome</td>
+                <td>@c.ValorMensal.ToString("C")</td>
+                <td>@c.ReajustePercentual</td>
+                <td>@c.DataInicio.ToShortDateString()</td>
+                <td>@c.DataFim.ToShortDateString()</td>
+                <td>@c.Status</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-info btn-sm">Detalhes</a>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger btn-sm">Excluir</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole("Administrador"))
+{
+    <a asp-action="Create" class="btn btn-success">Novo Contrato</a>
+}
+

@@ -1,0 +1,18 @@
+@model Parte_do_financeiro.Models.Contrato
+@{
+    ViewData["Title"] = "Detalhes do Contrato";
+}
+
+<h2>Detalhes do Contrato</h2>
+
+<table class="table table-bordered">
+    <tr><th>Nome</th><td>@Model.Nome</td></tr>
+    <tr><th>Valor Mensal</th><td>@Model.ValorMensal.ToString("C")</td></tr>
+    <tr><th>Reajuste (%)</th><td>@Model.ReajustePercentual</td></tr>
+    <tr><th>Data Início</th><td>@Model.DataInicio.ToShortDateString()</td></tr>
+    <tr><th>Data Fim</th><td>@Model.DataFim.ToShortDateString()</td></tr>
+    <tr><th>Status</th><td>@Model.Status</td></tr>
+    <tr><th>Observações</th><td>@Model.Observacoes</td></tr>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Voltar</a>

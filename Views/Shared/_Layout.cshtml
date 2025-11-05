@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Sistema de Gestão Condominial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 56px;
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #2f855a;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            width: 220px;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #276749;
+        }
+        .content {
+            margin-left: 230px;
+            padding: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">🏢 Gestão Condominial</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <span class="nav-link">👋 Olá, @User.Identity?.Name</span>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <button class="btn btn-outline-light">Sair</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="sidebar">
+        <h5 class="px-3">Menu</h5>
+
+        <!-- ADMINISTRADOR -->
+        @if (User.IsInRole("Administrador"))
+        {
+            <a asp-controller="Home" asp-action="Index">🏠 Dashboard</a>
+            <a asp-controller="Account" asp-action="Register">👤 Cadastrar Usuário</a>
+            <a asp-controller="Contratos" asp-action="Index">📑 Contratos</a>
+            <a asp-controller="Financeiro" asp-action="Index">💰 Financeiro</a>
+            <a asp-controller="Relatorios" asp-action="Index">📊 Relatórios</a>
+            <a asp-controller="Manutencoes" asp-action="Index">🛠️ Manutenções</a>
+            <a asp-controller="Comunicacao" asp-action="Index">💬 Comunicação</a>
+            <a asp-controller="Vistorias" asp-action="Index">🧾 Vistorias</a>
+        }
+
+        <!-- SÍNDICO -->
+        @if (User.IsInRole("Sindico"))
+        {
+            <a asp-controller="Home" asp-action="Index">🏠 Dashboard</a>
+            <a asp-controller="Contratos" asp-action="Index">📑 Contratos</a>
+            <a asp-controller="Financeiro" asp-action="Index">💰 Financeiro</a>
+            <a asp-controller="Relatorios" asp-action="Index">📊 Relatórios</a>
+            <a asp-controller="Manutencoes" asp-action="Index">🛠️ Manutenções</a>
+            <a asp-controller="Comunicacao" asp-action="Index">💬 Comunicação</a>
+            <a asp-controller="Vistorias" asp-action="Index">🧾 Vistorias</a>
+        }
+
+        <!-- MORADOR -->
+        @if (User.IsInRole("Morador"))
+        {
+            <a asp-controller="Home" asp-action="Index">🏠 Início</a>
+            <a asp-controller="Contratos" asp-action="Index">📄 Meus Contratos</a>
+            <a asp-controller="Financeiro" asp-action="Index">💵 Minhas Contas</a>
+            <a asp-controller="Comunicacao" asp-action="Index">💬 Comunicação</a>
+        }
+    </div>
+}
+
+<div class="content">
+    @RenderBody()
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
